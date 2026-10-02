@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orion | Engineering & Exploration</title>
+    <title>ORION | Engineering & Exploration</title>
     
-    <!-- Tailwind CSS for rapid styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Custom Tailwind Config for the "Spark" brand colors -->
     <script>
         tailwind.config = {
             theme: {
@@ -17,8 +14,11 @@
                         spark: {
                             blue: '#58A6FF',
                             purple: '#8a2be2',
-                            dark: '#0a0a0a'
+                            dark: '#050505'
                         }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     }
                 }
             }
@@ -26,133 +26,192 @@
     </script>
 
     <style>
-        /* Ambient Background Glow */
-        .ambient-glow {
+        body {
+            background-color: #050505;
+            background-image: radial-gradient(circle at top center, rgba(88,166,255,0.05) 0%, transparent 50%);
+        }
+
+        /* Reactive Hover Grid System */
+        #cards:hover > .card::after {
+            opacity: 1;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.02);
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        /* The glowing border effect */
+        .card::before,
+        .card::after {
+            border-radius: inherit;
+            content: "";
+            height: 100%;
+            left: 0px;
+            opacity: 0;
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80vw;
-            height: 80vw;
-            background: radial-gradient(circle, rgba(88,166,255,0.15) 0%, rgba(10,10,10,0) 60%);
-            z-index: -1;
-            pointer-events: none;
+            top: 0px;
+            transition: opacity 500ms;
+            width: 100%;
         }
-        
-        /* Glassmorphism Card Style */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+
+        .card::before {
+            background: radial-gradient(
+                800px circle at var(--mouse-x) var(--mouse-y), 
+                rgba(255, 255, 255, 0.06),
+                transparent 40%
+            );
+            z-index: 3;
         }
-        
-        .glass-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(88, 166, 255, 0.3);
-            background: rgba(255, 255, 255, 0.06);
+
+        .card::after {  
+            background: radial-gradient(
+                600px circle at var(--mouse-x) var(--mouse-y), 
+                rgba(88, 166, 255, 0.4),
+                transparent 40%
+            );
+            z-index: 1;
+        }
+
+        .card > .card-content {
+            background-color: #0a0a0a;
+            border-radius: inherit;
+            margin: 1px; /* Creates the thin glowing border */
+            height: calc(100% - 2px);
+            width: calc(100% - 2px);
+            z-index: 2;
+            position: relative;
         }
     </style>
 </head>
-<body class="bg-spark-dark text-slate-300 font-sans antialiased overflow-x-hidden selection:bg-spark-blue selection:text-white">
-
-    <!-- Glowing Background Effect -->
-    <div class="ambient-glow"></div>
+<body class="text-slate-300 font-sans antialiased overflow-x-hidden selection:bg-spark-blue selection:text-white">
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 top-0 border-b border-white/5 bg-spark-dark/50 backdrop-blur-md">
+    <nav class="fixed w-full z-50 top-0 border-b border-white/5 bg-spark-dark/70 backdrop-blur-xl">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="text-2xl font-bold tracking-tighter text-white">
-                Oraion<span class="text-spark-blue">.</span>
+            <div class="text-2xl font-bold tracking-widest text-white">
+                ORION<span class="text-spark-blue">.</span>
             </div>
-            <a href="https://github.com/ORIONbySPARK" target="_blank" class="text-sm font-medium hover:text-white transition-colors">
-                GitHub &rarr;
+            <a href="https://github.com/ORIONbySPARK" target="_blank" class="text-sm font-semibold tracking-wide hover:text-white transition-colors duration-300">
+                GITHUB &nearr;
             </a>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <header class="relative min-h-screen flex items-center justify-center pt-20 px-6">
+        <!-- Floating ambient light -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-spark-blue/20 rounded-full blur-[100px] animate-pulse-slow pointer-events-none"></div>
+        
         <div class="max-w-4xl mx-auto text-center z-10">
-            <div class="inline-block mb-4 px-4 py-1.5 rounded-full border border-spark-blue/30 bg-spark-blue/10 text-spark-blue text-sm font-semibold tracking-wide backdrop-blur-sm">
-                A Collaborative Engineering Space
+            <div class="inline-block mb-6 px-4 py-1.5 rounded-full border border-spark-blue/30 bg-spark-blue/10 text-spark-blue text-xs font-bold tracking-[0.2em] uppercase backdrop-blur-sm shadow-[0_0_15px_rgba(88,166,255,0.2)]">
+                Igniting the Spark
             </div>
             <h1 class="text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-8 leading-tight">
                 Curiosity driven. <br/>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-spark-blue to-spark-purple">Engineering focused.</span>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-spark-blue to-purple-400">Engineering focused.</span>
             </h1>
-            <p class="text-lg md:text-xl text-slate-400 mb-12 max-w-2xl mx-auto">
-                Oraion is an environment for builders, hackers, and curious minds to experiment, collaborate, and push the boundaries of modern software.
+            <p class="text-lg md:text-xl text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed">
+                ORION is an environment for builders, hackers, and curious minds to experiment, collaborate, and push the boundaries of modern software.
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#domains" class="px-8 py-4 rounded-lg bg-white text-black font-semibold hover:bg-slate-200 transition-colors">
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <a href="#domains" class="px-8 py-4 rounded-lg bg-white text-black font-bold tracking-wide hover:bg-slate-200 hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)]">
                     Explore Our Vision
                 </a>
-                <a href="https://github.com/ORIONbySPARK" class="px-8 py-4 rounded-lg glass-card text-white font-semibold flex items-center justify-center gap-2">
-                    Join the Spark
+                <a href="https://github.com/ORIONbySPARK" class="px-8 py-4 rounded-lg bg-white/5 border border-white/10 text-white font-bold tracking-wide hover:bg-white/10 hover:border-spark-blue/50 hover:scale-105 transition-all duration-300">
+                    Join the Mission
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- Exploration Domains (Bento Grid Style) -->
-    <section id="domains" class="py-24 px-6 border-t border-white/5 relative z-10">
+    <!-- Exploration Domains (Reactive Grid) -->
+    <section id="domains" class="py-24 px-6 relative z-10">
         <div class="max-w-7xl mx-auto">
             <div class="mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Exploration Domains</h2>
-                <p class="text-slate-400 max-w-2xl">While we are just igniting the spark, our roadmap is focused on mastering the technologies that shape the future.</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">Exploration Domains</h2>
+                <p class="text-slate-400 max-w-2xl">Our roadmap is focused on mastering the technologies that shape the future. Move your cursor over the grid.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div id="cards" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                
                 <!-- Large Card -->
-                <div class="md:col-span-2 glass-card rounded-2xl p-8 md:p-12">
-                    <div class="w-12 h-12 bg-spark-blue/20 rounded-xl flex items-center justify-center mb-6 border border-spark-blue/20">
-                        <svg class="w-6 h-6 text-spark-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                <div class="card md:col-span-2 min-h-[300px]">
+                    <div class="card-content p-8 md:p-12 flex flex-col justify-end">
+                        <div class="w-12 h-12 bg-spark-blue/10 rounded-xl flex items-center justify-center mb-6 border border-spark-blue/20 text-spark-blue">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-3">Modern Web Architecture</h3>
+                        <p class="text-slate-400 leading-relaxed">Exploring the bleeding edge of full-stack development. Building highly responsive, accessible, and beautifully designed user interfaces using next-generation tooling.</p>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-4">Modern Web Architecture</h3>
-                    <p class="text-slate-400">Exploring the bleeding edge of full-stack development. Building highly responsive, accessible, and beautifully designed user interfaces using next-generation tooling.</p>
                 </div>
 
                 <!-- Medium Card 1 -->
-                <div class="glass-card rounded-2xl p-8">
-                    <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-6 border border-purple-500/20">
-                        <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                <div class="card min-h-[300px]">
+                    <div class="card-content p-8 flex flex-col justify-end">
+                        <div class="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mb-6 border border-purple-500/20 text-purple-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">AI & Automation</h3>
+                        <p class="text-slate-400 leading-relaxed">Integrating agentic workflows and intelligent pipelines to solve real-world problems.</p>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-4">AI & Automation</h3>
-                    <p class="text-slate-400">Integrating agentic workflows and intelligent pipelines to solve real-world problems.</p>
                 </div>
 
                 <!-- Medium Card 2 -->
-                <div class="glass-card rounded-2xl p-8">
-                    <div class="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center mb-6 border border-emerald-500/20">
-                        <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                <div class="card min-h-[300px]">
+                    <div class="card-content p-8 flex flex-col justify-end">
+                        <div class="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center mb-6 border border-emerald-500/20 text-emerald-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Open Source</h3>
+                        <p class="text-slate-400 leading-relaxed">Contributing to the ecosystem. Writing clean, documented, and production-ready code.</p>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-4">Open Source</h3>
-                    <p class="text-slate-400">Contributing to the ecosystem. Writing clean, documented, and production-ready code.</p>
                 </div>
                 
-                <div class="md:col-span-2 glass-card rounded-2xl p-8">
-                    <h3 class="text-xl font-bold text-white mb-4">The Standard</h3>
-                    <div class="flex flex-wrap gap-3 mt-4">
-                        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sm">Clean Architecture</span>
-                        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sm">Zero Hardcoded Secrets</span>
-                        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sm">Full Documentation</span>
-                        <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sm">Strict Type Safety</span>
+                <!-- Full Width Standard Card -->
+                <div class="card md:col-span-2 min-h-[200px]">
+                    <div class="card-content p-8 flex flex-col justify-center">
+                        <h3 class="text-xl font-bold text-white mb-4">The Standard</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-medium hover:border-spark-blue/50 hover:text-white transition-colors cursor-default">Clean Architecture</span>
+                            <span class="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-medium hover:border-spark-blue/50 hover:text-white transition-colors cursor-default">Zero Hardcoded Secrets</span>
+                            <span class="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-medium hover:border-spark-blue/50 hover:text-white transition-colors cursor-default">Strict Type Safety</span>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-white/5 py-12 px-6 mt-12 bg-black/20">
+    <footer class="border-t border-white/5 py-12 px-6 mt-12 bg-[#030303]">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="text-xl font-bold text-white">Orion<span class="text-spark-blue">.</span></div>
-            <div class="text-slate-500 text-sm">
+            <div class="text-xl font-bold text-white tracking-widest">ORION<span class="text-spark-blue">.</span></div>
+            <div class="text-slate-600 text-sm font-medium">
                 Built by curious minds. Hosted on GitHub Pages.
             </div>
         </div>
     </footer>
 
+    <!-- Script for the Reactive Hover Effect -->
+    <script>
+        document.getElementById("cards").onmousemove = e => {
+            for(const card of document.getElementsByClassName("card")) {
+                const rect = card.getBoundingClientRect(),
+                      x = e.clientX - rect.left,
+                      y = e.clientY - rect.top;
+                card.style.setProperty("--mouse-x", `${x}px`);
+                card.style.setProperty("--mouse-y", `${y}px`);
+            };
+        }
+    </script>
 </body>
 </html>
